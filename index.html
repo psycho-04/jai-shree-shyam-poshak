@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radha Krishna Divine Creations | Laddu Gopal Poshak</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">
+            <span>Divine</span> Poshak
+        </div>
+        <button class="cart-trigger" onclick="toggleCart()">
+            🛒 Cart (<span id="cart-count">0</span>)
+        </button>
+    </header>
+
+    <section class="hero">
+        <p class="subtitle">Devotional Luxury & Elegance</p>
+        <h1>Exquisite Laddu Gopal Poshak</h1>
+        <p>Handcrafted designs created with pure devotion for your Deity.</p>
+    </section>
+
+    <main class="container">
+        <div class="utility-bar">
+            <input type="text" id="search-input" placeholder="Search poshak by name or color..." onkeyup="handleSearch()">
+            <button class="size-guide-btn" onclick="toggleSizeGuide(true)">📐 View Size Guide</button>
+        </div>
+
+        <div class="category-tabs">
+            <button class="category-btn active" onclick="filterByCategory('all')">All Collections</button>
+            <button class="category-btn" onclick="filterByCategory('heavy')">Heavy Festival</button>
+            <button class="category-btn" onclick="filterByCategory('daily')">Daily Wear</button>
+            <button class="category-btn" onclick="filterByCategory('cotton')">Cotton Summer</button>
+        </div>
+
+        <div class="filter-container">
+            <span>Filter by Size:</span>
+            <button class="filter-btn active" onclick="filterBySize('all')">All</button>
+            <button class="filter-btn" onclick="filterBySize('0')">Size 0</button>
+            <button class="filter-btn" onclick="filterBySize('1')">Size 1</button>
+            <button class="filter-btn" onclick="filterBySize('2')">Size 2</button>
+            <button class="filter-btn" onclick="filterBySize('3')">Size 3</button>
+            <button class="filter-btn" onclick="filterBySize('4')">Size 4</button>
+            <button class="filter-btn" onclick="filterBySize('5')">Size 5</button>
+            <button class="filter-btn" onclick="filterBySize('6')">Size 6</button>
+        </div>
+
+        <div class="product-grid" id="product-grid"></div>
+    </main>
+
+    <div class="modal-overlay" id="size-guide-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Laddu Gopal Dress Size Chart</h3>
+                <button class="close-btn" onclick="toggleSizeGuide(false)">&times;</button>
+            </div>
+            <div class="modal-body">
+                <table class="size-table">
+                    <thead>
+                        <tr>
+                            <th>Size</th>
+                            <th>Idol Height (Inches)</th>
+                            <th>Dress Diameter (Inches)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Size 0</td><td>1.5" - 2"</td><td>4"</td></tr>
+                        <tr><td>Size 1</td><td>2" - 2.5"</td><td>5"</td></tr>
+                        <tr><td>Size 2</td><td>2.5" - 3"</td><td>6"</td></tr>
+                        <tr><td>Size 3</td><td>3" - 4"</td><td>7"</td></tr>
+                        <tr><td>Size 4</td><td>4" - 5"</td><td>8"</td></tr>
+                        <tr><td>Size 5</td><td>5" - 6"</td><td>10"</td></tr>
+                        <tr><td>Size 6</td><td>6" - 7"</td><td>12"</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="payment-modal">
+        <div class="modal-content" style="text-align: center;">
+            <div class="modal-header">
+                <h3>Scan & Pay with UPI</h3>
+                <button class="close-btn" onclick="togglePaymentModal(false)">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Scan using GPay, PhonePe, or Paytm</p>
+                <div class="qr-container">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=yourupiid@okaxis&pn=DivinePoshakStore" alt="UPI QR Code">
+                </div>
+                <p class="upi-id">UPI ID: <strong>yourupiid@okaxis</strong></p>
+                <p class="pay-amount">Amount to Pay: <strong>₹<span id="qr-total-amount">0</span></strong></p>
+                <button class="checkout-btn" style="margin-top: 15px;" onclick="confirmOrderWhatsApp()">
+                    Confirm Order via WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+    <aside class="cart-drawer" id="cart-drawer">
+        <div class="cart-header">
+            <h3>Your Selection</h3>
+            <button class="close-btn" onclick="toggleCart()">&times;</button>
+        </div>
+
+        <div class="shipping-progress-container">
+            <p id="shipping-msg">Add ₹999 for FREE Shipping!</p>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="shipping-bar"></div>
+            </div>
+        </div>
+        
+        <div class="cart-body" id="cart-items">
+            <p class="empty-msg">Your cart is empty.</p>
+        </div>
+
+        <div class="cart-footer">
+            <div class="total-row">
+                <span>Total Amount:</span>
+                <span class="total-price">₹<span id="cart-total">0</span></span>
+            </div>
+            <button class="checkout-btn" onclick="openPaymentProcess()">
+                Proceed to Checkout / Pay UPI
+            </button>
+            <button class="clear-btn" id="clear-btn" onclick="clearCart()">
+                Clear Entire Cart
+            </button>
+        </div>
+    </aside>
+
+    <script src="script.js"></script>
+</body>
+</html>
