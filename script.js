@@ -1,43 +1,43 @@
 const products = [
-    { 
-        id: 1, 
-        name: "Royal Velvet Zardozi Heavy Dress - Maroon", 
-        price: 850, 
+    {
+        id: 1,
+        name: "Royal Velvet Zardozi Heavy Dress - Maroon",
+        price: 850,
         category: "heavy",
         availableSizes: ["0", "1", "2", "3", "4", "5", "6"],
-        image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&q=80&w=400" 
+        image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&q=80&w=400"
     },
-    { 
-        id: 2, 
-        name: "Pure Silk Peacock Feather Poshak - Green", 
-        price: 650, 
+    {
+        id: 2,
+        name: "Pure Silk Peacock Feather Poshak - Green",
+        price: 650,
         category: "heavy",
         availableSizes: ["1", "2", "3", "4"],
-        image: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&q=80&w=400" 
+        image: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&q=80&w=400"
     },
-    { 
-        id: 3, 
-        name: "Handcrafted Summer Cotton Dress - Yellow", 
-        price: 350, 
+    {
+        id: 3,
+        name: "Handcrafted Summer Cotton Dress - Yellow",
+        price: 350,
         category: "cotton",
         availableSizes: ["0", "1", "2"],
-        image: "https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&q=80&w=400" 
+        image: "https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&q=80&w=400"
     },
-    { 
-        id: 4, 
-        name: "Gold Embroidery Festival Special - Red", 
-        price: 1200, 
+    {
+        id: 4,
+        name: "Gold Embroidery Festival Special - Red",
+        price: 1200,
         category: "heavy",
         availableSizes: ["3", "4", "5", "6"],
-        image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&q=80&w=400" 
+        image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&q=80&w=400"
     },
-    { 
-        id: 5, 
-        name: "Daily Wear Printed Silk Poshak - Blue", 
-        price: 280, 
+    {
+        id: 5,
+        name: "Daily Wear Printed Silk Poshak - Blue",
+        price: 280,
         category: "daily",
         availableSizes: ["0", "1", "2", "3"],
-        image: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&q=80&w=400" 
+        image: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&q=80&w=400"
     }
 ];
 
@@ -49,7 +49,7 @@ const freeShippingThreshold = 999;
 
 function displayProducts() {
     const grid = document.getElementById('product-grid');
-    
+
     const filteredProducts = products.filter(p => {
         const matchesSize = activeFilter === 'all' || p.availableSizes.includes(activeFilter);
         const matchesCategory = activeCategory === 'all' || p.category === activeCategory;
@@ -57,7 +57,7 @@ function displayProducts() {
         return matchesSize && matchesCategory && matchesSearch;
     });
 
-    if(filteredProducts.length === 0) {
+    if (filteredProducts.length === 0) {
         grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); margin: 40px 0;">No poshaks found matching your criteria.</p>`;
         return;
     }
@@ -136,26 +136,26 @@ function addToCart(productId) {
 
     const itemPrice = product.price + extraCost;
     const itemKey = `${productId}-${selectedSize}-${addons.join('-')}`;
-    
+
     const existingIndex = cart.findIndex(item => item.key === itemKey);
-    
+
     if (existingIndex > -1) {
         cart[existingIndex].quantity += 1;
     } else {
-        cart.push({ 
-            ...product, 
+        cart.push({
+            ...product,
             key: itemKey,
-            selectedSize: selectedSize, 
+            selectedSize: selectedSize,
             unitPrice: itemPrice,
             addonsList: addons,
-            quantity: 1 
+            quantity: 1
         });
     }
 
     // Reset checkboxes
     document.getElementById(`mukut-${productId}`).checked = false;
     document.getElementById(`bansuri-${productId}`).checked = false;
-    
+
     updateCartUI();
     toggleCart(true);
 }
@@ -234,7 +234,7 @@ function updateCartUI() {
 function toggleCart(forceOpen = false) {
     const drawer = document.getElementById('cart-drawer');
     const overlay = document.getElementById('cart-overlay');
-    
+
     if (forceOpen || !drawer.classList.contains('open')) {
         drawer.classList.add('open');
         overlay.classList.add('open');
@@ -255,7 +255,7 @@ function openPaymentProcess() {
 }
 
 function confirmOrderWhatsApp() {
-    const phoneNumber = "919876543210"; // Replace with your WhatsApp number
+    const phoneNumber = "919660517992"; // Replace with your WhatsApp number
     let message = "Radhe Radhe! I have completed/placed my order:\n\n";
     cart.forEach((item, index) => {
         const addonsStr = item.addonsList.length > 0 ? ` (+${item.addonsList.join(', ')})` : '';
